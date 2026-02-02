@@ -1,80 +1,90 @@
 <!doctype html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LP</title>
+  <title>Landing Page</title>
   <style>
-    body{font-family:system-ui,Arial; margin:0; background:#0b1220; color:#e6edf3;}
-    .wrap{max-width:820px; margin:60px auto; padding:24px;}
-    .card{background:#111a2e; border:1px solid #223154; border-radius:16px; padding:22px;}
-    h1{margin:0 0 6px; font-size:28px;}
-    p{margin:0 0 18px; color:#a9b6d3;}
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-    .grid1{display:grid; grid-template-columns:1fr; gap:12px;}
-    input,textarea{width:100%; padding:12px 12px; border-radius:12px; border:1px solid #2b3b63; background:#0b1220; color:#e6edf3; outline:none;}
-    textarea{min-height:110px; resize:vertical;}
-    button{padding:12px 14px; border:0; border-radius:12px; background:#2f81f7; color:white; cursor:pointer; font-weight:600;}
-    button:disabled{opacity:.6; cursor:not-allowed;}
-    .row{display:flex; gap:12px; align-items:center; justify-content:space-between; margin-top:10px;}
-    .msg{margin-top:12px; padding:10px 12px; border-radius:12px; border:1px solid #2b3b63; background:#0b1220; display:none;}
-    .msg.ok{border-color:#2ea043;}
-    .msg.err{border-color:#f85149;}
-    .small{font-size:12px; color:#a9b6d3;}
-    .hint{font-size:12px; color:#a9b6d3; margin-top:10px;}
-    @media(max-width:700px){.grid{grid-template-columns:1fr;}}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#0b1220; color:#e5e7eb; margin:0; padding:24px;}
+    .wrap{max-width:860px; margin:0 auto;}
+    h1{margin:0 0 8px; font-size:34px;}
+    p{margin:0 0 18px; color:#cbd5e1}
+    .card{background:#0f172a; border:1px solid #1f2a44; border-radius:14px; padding:18px;}
+    .row{display:flex; gap:12px; flex-wrap:wrap;}
+    .col{flex:1; min-width:240px;}
+    label{display:block; margin:10px 0 6px; color:#cbd5e1; font-size:14px;}
+    input,textarea{
+      width:100%; box-sizing:border-box;
+      padding:12px 12px;
+      border-radius:10px;
+      border:1px solid #26324f;
+      background:#0b1220;
+      color:#e5e7eb;
+      outline:none;
+    }
+    textarea{min-height:120px; resize:vertical;}
+    input:focus,textarea:focus{border-color:#3b82f6;}
+    .btn{
+      margin-top:14px;
+      padding:12px 16px;
+      border:0;
+      border-radius:12px;
+      background:#38bdf8;
+      color:#001018;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn:disabled{opacity:.55; cursor:not-allowed;}
+    .msg{margin-top:12px; padding:12px; border-radius:12px; display:none;}
+    .ok{background:#052e1a; border:1px solid #14532d; color:#bbf7d0;}
+    .err{background:#3b0a0a; border:1px solid #7f1d1d; color:#fecaca;}
+    .hint{margin-top:10px; font-size:12px; color:#94a3b8;}
+    code{background:#0b1220; border:1px solid #26324f; padding:2px 6px; border-radius:8px; color:#e2e8f0;}
   </style>
 </head>
 
 <body>
   <div class="wrap">
+    <h1>Landing Page</h1>
+    <p>عمر المعلومات وارسِلها لـ n8n مباشرة.</p>
+
     <div class="card">
-      <h1>Landing Page</h1>
-      <p>عمر المعلومات وارسّلها. غادي تمشي مباشرة لـ n8n.</p>
-
-      <form id="leadForm" class="grid1">
-        <div class="grid">
-          <div>
-            <label class="small">الاسم</label>
-            <input name="name" required placeholder="مثال: Mouad" />
-          </div>
-          <div>
-            <label class="small">الهاتف / WhatsApp</label>
-            <input name="phone" required placeholder="+212..." />
-          </div>
-        </div>
-
-        <div>
-          <label class="small">الإيميل (اختياري)</label>
-          <input name="email" type="email" placeholder="you@email.com" />
-        </div>
-
-        <div>
-          <label class="small">رسالة (اختياري)</label>
-          <textarea name="message" placeholder="شنو بغيتي؟"></textarea>
-        </div>
-
+      <form id="leadForm">
         <div class="row">
-          <button id="btn" type="submit">إرسال</button>
-          <span class="small" id="statusText"></span>
+          <div class="col">
+            <label for="name">الاسم</label>
+            <input id="name" name="name" placeholder="مثال: Mouad" required />
+          </div>
+
+          <div class="col">
+            <label for="phone">الهاتف / WhatsApp</label>
+            <input id="phone" name="phone" placeholder="+212..." required />
+          </div>
         </div>
 
-        <div class="msg" id="msgBox"></div>
+        <label for="email">الإيميل (اختياري)</label>
+        <input id="email" name="email" placeholder="you@email.com" />
 
+        <label for="message">رسالة (اختياري)</label>
+        <textarea id="message" name="message" placeholder="شنو بغيتي؟"></textarea>
+
+        <button class="btn" id="btn" type="submit">إرسال</button>
+
+        <div id="msgBox" class="msg"></div>
         <div class="hint">
-          ⚠️ مهم: خاصك تعوّض WEBHOOK_URL بالرابط ديال n8n اللي غادي نخرّجوه فـ الخطوة 2.
+          مهم: خاص <b>WEBHOOK_URL</b> يكون Production ديال n8n عبر Cloudflare Tunnel.
         </div>
       </form>
     </div>
   </div>
 
   <script>
-    // ✅ بدّل هاد الرابط من بعد
+    // ✅ حط هنا رابط Cloudflare ديالك اللي كيدخل لـ n8n production webhook
     const WEBHOOK_URL = "https://printing-lucky-dash-frequency.trycloudflare.com/webhook/landing";
+
     const form = document.getElementById("leadForm");
     const btn = document.getElementById("btn");
     const msgBox = document.getElementById("msgBox");
-    const statusText = document.getElementById("statusText");
 
     function showMsg(text, ok=true){
       msgBox.style.display = "block";
@@ -82,52 +92,70 @@
       msgBox.textContent = text;
     }
 
+    function normalizePhone(v){
+      return (v || "").toString().trim();
+    }
+
+    function clean(v){
+      return (v || "").toString().trim();
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      if (!WEBHOOK_URL || WEBHOOK_URL.includes("PUT_YOUR_N8N_WEBHOOK_URL_HERE")) {
-        showMsg("بدّل WEBHOOK_URL فـ الكود ديال الصفحة بالرابط ديال n8n.", false);
+      // Basic checks
+      if (!WEBHOOK_URL || !/^https?:\/\//i.test(WEBHOOK_URL)) {
+        showMsg("WEBHOOK_URL غير صحيح. رجّع للكود وحط الرابط الصحيح.", false);
+        return;
+      }
+
+      const data = {
+        name: clean(form.name.value),
+        phone: normalizePhone(form.phone.value),
+        email: clean(form.email.value),
+        message: clean(form.message.value),
+        page: location.href,
+        ts: new Date().toISOString()
+      };
+
+      if (!data.name || !data.phone) {
+        showMsg("الاسم والهاتف ضروريين.", false);
         return;
       }
 
       btn.disabled = true;
-      statusText.textContent = "Sending...";
+      btn.textContent = "Sending...";
 
-      const data = Object.fromEntries(new FormData(form).entries());
-      data.page = location.href;
-      data.ts = new Date().toISOString();
-
-      try{
+      try {
         const res = await fetch(WEBHOOK_URL, {
           method: "POST",
-          headers: {"Content-Type":"application/json"},
-          body: JSON.stringify(data)
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+          // مهم: كيخلي المتصفح يتقبل رد حتى إلا كان بسيط
+          mode: "cors",
         });
 
-        if(!res.ok){
-          const t = await res.text().catch(()=> "");
-          throw new Error("HTTP " + res.status + " " + t);
+        // بعض الأحيان n8n كيرد بـ 204 بلا body
+        if (!res.ok) {
+          const txt = await res.text().catch(() => "");
+          showMsg("فشل الإرسال: HTTP " + res.status + (txt ? " | " + txt.slice(0,120) : ""), false);
+          return;
         }
 
-        showMsg("تم الإرسال بنجاح ✅");
+        let payload = null;
+        try { payload = await res.json(); } catch(_) {}
+
+        showMsg("✅ تم الإرسال بنجاح");
         form.reset();
-      }catch(err){
-        showMsg("فشل الإرسال: " + err.message, false);
-      }finally{
+
+      } catch (err) {
+        // غالباً CORS/Tunnel down/URL غلط
+        showMsg("فشل الإرسال: Failed to fetch (تأكد أن Cloudflare شغال و n8n شغال و الرابط صحيح)", false);
+      } finally {
         btn.disabled = false;
-        statusText.textContent = "";
+        btn.textContent = "إرسال";
       }
     });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
